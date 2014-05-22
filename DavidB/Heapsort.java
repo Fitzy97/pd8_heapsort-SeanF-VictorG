@@ -4,11 +4,11 @@
 //2014-05-21 
 
 /*****************************************************
- *Heapsort.java
+  *Heapsort.java
 
 My approach was to first make helper funcions that would due the components that I wanted done. I made swap which would swap the values in 2 positions for an array, then I made maxChildPos, then Heapify then MaxHeapify, then sort and then max which was required for me to heapify it completely later.
 
-Basically what I did for the sort is a looked at the max value of the data set and heapified it till it became the root, thereby making a kind of max heap ( I can't get it to completely become a max heap without using other more memory). Then I would swap the root with the right most leaf of the heap and then I would partially heapify the array again to make it more like a heap as nodes would get sifted down until the heap property was regained. Then I would partially heapify the array again and but it will be ignoring the last index in the array and heapify without touching it, this part is the sorted array. Then I would keep decrementing the size of the unsorted heap and moving the last index of the heap and then make that index a part of the sorted region and then heapify the rest of the array that is not sorted. I would continue this until I reach the root and then I will stop sorting as the sorting will be done.
+Basically what I did for the sort is a looked at the max value of the data set and heapified it till it became the root, thereby making a kind of max heap ( I can't get it to completely become a max heap without using other more memory). Then I call a loop that would swap the root with the right most leaf of the heap and then I would partially heapify the array again to make it more like a heap as nodes would get sifted down until the heap property was regained. Then I would partially heapify the array again and but it will be ignoring the last index in the array and heapify without touching it, this part is the sorted array. Then I would keep decrementing the size of the unsorted heap and moving the max to the last index of the heap, which is unsorted, and then make that index a part of the sorted region by decrementing the limit or size of the unsorted heap and then heapify the rest of the array that is not sorted. I would continue this loop until I reach the root and then I will stop sorting as the sorting will be done.
 
 O (1) memory constraint
  *****************************************************/
