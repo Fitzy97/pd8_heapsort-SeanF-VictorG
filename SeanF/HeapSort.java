@@ -1,12 +1,18 @@
 //Sean Fitzgerald
 //APCS2 pd08
-//HW40
-//2014-05-19
+//HW42
+//2014-05-22
 
 /*******************************************
-BEST CASE: Array contains 1 element -- O(n)
-WORST CASE: Array contains infinite elements -- O(n)
-My sort does not look at the data, therefore always runs at O(n)
+APPROACH:
+
+1. Heapify array -- parse through array, every time a new element is touched, swap it backwards until it satisfies heapness.
+
+2. Print heapified array. (Most important)
+
+3. Starting from the back, parse through array.  Each time an element is touched, put the first array element in temp storage and the touched element in index 0.  Then, swap that element down the unsorted region of the array until it satisfies heapness.  The sorted region grows form the right.  
+
+4. Uses a min heap and sorts in descending order.
 *******************************************/
 
 public class HeapSort {
@@ -17,7 +23,20 @@ public class HeapSort {
 	_heap = new ALHeap();
     }
 
-    public Integer[] sort( Integer[] data ) {
+    public void swap( Integer[] data, int index1, int index2 ) {
+	Integer temp = data[index1];
+	data[index1] = data[index2];;
+        data[index2] = temp;
+    }
+
+    public int minOf( Integer[] data, int index1, int index2 ) {
+	if ( data[index1] < data[index2] )
+	    return index1;
+	else
+	    return index2;
+    }
+
+    public Integer[] sort1( Integer[] data ) {
 
 	Integer[] sorted = new Integer[data.length];
 
@@ -31,13 +50,43 @@ public class HeapSort {
 	}
 
 	return sorted;
+    }
+
+    public Integer[] sort( Integer[] data ) {
+
+	Integer temp = data[0];
+
+	for (int i = 1; i < data.length; i++) {
+	    for (int p = i; p > 0; p = (p-1)/2) {
+		if ( data[p] < data[(p-1)/2] )
+		    swap( data, p, (p-1)/2 );
+	    }
+	}
+
+	System.out.println( "\nHeapified data: " );
+	for( Integer i: data )
+	    System.out.print( "["+i+"]" );
+
+	for (int i = data.length-1; i > 0; i--) {
+	    temp = data[0];
+	    data[0] = data[i];
+	    for (int p = 0; p*2+1 < i;){
+		int q = p;
+		p = minOf( data, p*2+1, p*2+2 );
+		swap( data, q, p);
+	    }
+	    data[i] = temp;
+	}
+
+	return data;
 
     }
+
 
     public static void main( String[] args ) {
 
 	HeapSort sortedHeap = new HeapSort();
-	Integer[] data = {12, 5, 9, 0, 11, 6, 4, 2, 10, 1, 3, 7, 8};
+	Integer[] data = {12, 5, 9, 0, 11, 4, 1, 2, 7, 3, 8, 6, 10, 107, -9, 50, 897, 25, 456, -8};
 
 	System.out.println( "Unsorted data: " );
 	for( Integer i: data )
